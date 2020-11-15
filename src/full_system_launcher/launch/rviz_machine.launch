@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<!-- LAUNCH ROBOTS -->
+  <!-- Launch Pioneer3AT 1 -->
+  <group ns="pioneer3at_1">
+    <include file="$(find pioneer3at_ros)/launch/pioneer3at.launch">
+      <arg name="robot_name" value="pioneer3at_1"/>
+      <arg name="xcoordinate" value="0.0"/>
+      <arg name="ycoordinate" value="5.0"/>
+      <arg name="zcoordinate" value="1.54"/>
+      <arg name="roll" value="0.0"/>
+      <arg name="pitch" value="0.0"/>
+      <arg name="yaw" value="0.0"/>
+    </include>
+  </group> 
+
+  <!-- Launch Pioneer3AT 2 -->
+  <group ns="pioneer3at_2">
+    <include file="$(find pioneer3at_ros)/launch/pioneer3at.launch">
+      <arg name="robot_name" value="pioneer3at_2"/>
+      <arg name="xcoordinate" value="0.0"/>
+      <arg name="ycoordinate" value="6.0"/>
+      <arg name="zcoordinate" value="1.58"/>
+      <arg name="roll" value="0.0"/>
+      <arg name="pitch" value="0.0"/>
+      <arg name="yaw" value="0.0"/>
+    </include>
+  </group> 
+
+
+<!--LAUNCH MAP_MERGE 
+  <include file="$(find slam)/launch/multi_map_merge.launch">
+      <arg name="namespace" value="pioneer3at"/>
+      <arg name="first_robot"  value="pioneer3at_1"/>
+      <arg name="second_robot" value="pioneer3at_2"/>
+
+      <arg name="first_robot_x_pos" value=" -5.0"/>
+      <arg name="first_robot_y_pos" value=" 0.0"/>
+      <arg name="first_robot_z_pos" value=" 0.17"/>
+      <arg name="first_robot_yaw"   value=" 0.0"/>
+
+      <arg name="second_robot_x_pos" value="-3.0"/>
+      <arg name="second_robot_y_pos" value="-3.0"/>
+      <arg name="second_robot_z_pos" value=" 0.0"/>
+      <arg name="second_robot_yaw"   value=" 0.0"/> 
+  </include> -->
+
+<!-- LAUNCH RVIZ -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find slam)/rviz/multi_slam.rviz"/>
+  <master auto="start"/>
+  <param name="/use_sim_time" value="true"/> 
+
+<!-- LAUNCH RQT
+  <node name="rqt_topic" pkg="rqt_topic" type="rqt_topic" output="screen" /> 
+  <node name="rqt_graph" pkg="rqt_graph" type="rqt_graph" output="screen" /> 
+  <node name="rqt_console" pkg="rqt_console" type="rqt_console" output="screen" /> 
+  <node name="rqt_tf_tree" pkg="rqt_tf_tree" type="rqt_tf_tree" output="screen" /> -->
+
+
+</launch>	
+

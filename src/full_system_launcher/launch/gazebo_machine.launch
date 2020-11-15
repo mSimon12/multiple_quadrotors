@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+<launch>
+
+   <!--Launch the world with the robots on Gazebo  -->	
+   <include file="$(find usar_gazebo)/launch/base_scene.launch"/>
+   <!--<include file="$(find usar_gazebo)/launch/post-disaster.launch"/> -->
+
+<!-- LAUNCH ROBOTS -->
+  <!-- Spawn simulated quadrotor uav 1 -->
+  <group ns="UAV_1">
+    <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch" >
+      <arg name="name" default="UAV_1"/>
+      <arg name="model" value="$(find hector_quadrotor_description)/urdf/quadrotor_hokuyo_utm30lx.gazebo.xacro"/>
+      <arg name="controllers" value="
+    	  controller/position
+    	  controller/velocity
+    	  controller/attitude
+          "/>
+      <arg name="x" default="0.0"/>
+      <arg name="y" default="1.0"/>
+      <arg name="z" default="1.44"/> 
+    </include>
+  </group> 
+
+  <!-- Spawn simulated quadrotor uav 2 
+  <group ns="UAV_2">
+    <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch" >
+      <arg name="name" default="UAV_2"/>
+      <arg name="model" value="$(find hector_quadrotor_description)/urdf/quadrotor_hokuyo_utm30lx.gazebo.xacro"/>
+      <arg name="controllers" value="
+    	  controller/position
+    	  controller/velocity
+    	  controller/attitude
+          "/>
+      <arg name="x" default="0.0"/>
+      <arg name="y" default="2.0"/>
+      <arg name="z" default="1.46"/> 
+    </include>
+  </group> -->
+
+  <!-- Launch Pioneer2DX 1
+  <group ns="pioneer2dx_1">
+    <include file="$(find pioneer2dx_ros)/launch/pioneer2dx.launch">
+      <arg name="robot_name" value="pioneer2dx_1"/>
+      <arg name="xcoordinate" value="20.0"/>
+      <arg name="ycoordinate" value="-30.0"/>
+      <arg name="zcoordinate" value="1.3"/>
+      <arg name="roll" value="0.0"/>
+      <arg name="pitch" value="0.0"/>
+      <arg name="yaw" value="1.57"/>
+    </include>
+  </group> -->
+
+  <!-- Launch Pioneer2DX 2 
+  <group ns="pioneer2dx_2">
+    <include file="$(find pioneer2dx_ros)/launch/pioneer2dx.launch">
+      <arg name="robot_name" value="pioneer2dx_2"/>
+      <arg name="xcoordinate" value="19.0"/>
+      <arg name="ycoordinate" value="-30.0"/>
+      <arg name="zcoordinate" value="1.3"/>
+      <arg name="roll" value="0.0"/>
+      <arg name="pitch" value="0.0"/>
+      <arg name="yaw" value="1.57"/>
+    </include>
+  </group> -->
+
+  <!-- Include MYROBOT 
+  <include file="$(find myrobot_description)/launch/myrobot.launch">
+    <arg name="robot_name" value="myrobot"/>
+    <arg name="xcoordinate" value="5.0"/>
+    <arg name="ycoordinate" value="0.0"/>
+    <arg name="zcoordinate" value="2.0"/>
+    <arg name="roll" value="0.0"/>
+    <arg name="pitch" value="0.0"/>
+    <arg name="yaw" value="0.0"/>
+  </include>-->
+
+
+<!-- LAUNCH HUMAN TEAMS -->
+
+  <!-- Launch fireman1 -->
+  <group ns="human1"> 
+    <include file="$(find human_teams)/launch/fireman1.launch">
+      <arg name="human_name" value="human1"/>
+      <arg name="xcoordinate" value="-2.0"/>
+      <arg name="ycoordinate" value="0.0"/>
+      <arg name="zcoordinate" value="1.15"/>
+      <arg name="yaw" value="1.57"/>
+    </include>
+  </group> 
+
+  <!-- Launch fireman2 -->
+  <group ns="human2">
+    <include file="$(find human_teams)/launch/fireman2.launch">
+      <arg name="human_name" value="human2"/>
+      <arg name="xcoordinate" value="-2.0"/>
+      <arg name="ycoordinate" value="2.0"/>
+      <arg name="zcoordinate" value="1.15"/>
+      <arg name="yaw" value="1.57"/>
+    </include>
+  </group> 
+
+</launch>	
+

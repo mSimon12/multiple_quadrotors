@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node name="gazebo_killer" pkg="hector_moveit_config" type="gazebo_killer.sh"/>
+  <arg name="debug" default="false" />
+
+  <!-- My args -->
+  <arg name="drone_name" default="UAV"/>
+  <arg name="model" default="$(find hector_quadrotor_description)/urdf/quadrotor_with_kinect.gazebo.xacro"/>
+  <arg name="world_frame" default="world"/>
+
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.3"/> 
+  <arg name="yaw" default="0.0"/> 
+
+  <arg name="use_ground_truth_for_tf" default="true"/>
+  <arg name="use_ground_truth_for_control" default="true"/>
+  <arg name="use_pose_estimation" if="$(arg use_ground_truth_for_control)" default="false"/>
+  <arg name="use_pose_estimation" unless="$(arg use_ground_truth_for_control)" default="true"/>
+
+
+  <!-- SPAWN QUADROTOR -->
+  <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch">
+    <arg name="name" default="$(arg drone_name)"/>
+    <arg name="world_frame" value="$(arg world_frame)"/>
+    <arg name="model" value="$(arg model)"/>
+    <arg name="tf_prefix" default="$(arg drone_name)"/>
+    <arg name="x" default="$(arg x)"/>
+    <arg name="y" default="$(arg y)"/>
+    <arg name="z" default="$(arg z)"/>
+    <arg name="yaw" default="$(arg yaw)"/>   
+    <arg name="use_ground_truth_for_tf" value="$(arg use_ground_truth_for_tf)"/>
+    <arg name="use_ground_truth_for_control" value="$(arg use_ground_truth_for_control)"/>
+    <arg name="use_pose_estimation" value="$(arg use_pose_estimation)"/>
+  </include>
+
+  <!-- We do not have a robot connected, so publish fake joint states -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <param name="use_gui" value="false"/>
+    <param name="publish_frequency" type="double" value="100.0" />
+    <rosparam param="source_list">[/move_group/fake_controller_joint_states]</rosparam>
+  </node> 
+
+  <!-- Adjust grid size to have more granular exploration-->
+  <param name="grid_size" type="double" value="13"/> 
+
+  <!-- Publishing tf_static between earth and robot/map. -->
+  <node name="earth_to_world_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 earth $(arg drone_name)/map 50"/> 
+
+  <!-- RTABMAP SLAM --> 
+  <include file="$(find slam)/launch/rtab_slam.launch">
+    <arg name='robot_name' value='$(arg drone_name)'/>
+    <arg name="map_frame"   value="$(arg drone_name)/map"/>
+    <arg name="odom_frame"  value="$(arg drone_name)/world"/>
+    <arg name="base_frame"  value="$(arg drone_name)/base_link"/>
+    <arg name="publish_rate"  value="0.015"/>
+  </include>
+
+  <!-- OCTOMAP --> 
+  <include file="$(find slam)/launch/octomap_mapping.launch">
+    <arg name='map_frame' value='$(arg drone_name)/map'/>
+    <arg name='base_frame' value='$(arg drone_name)/world'/>
+    <arg name='point_cloud' value='camera/depth/points'/>
+    <arg name='sensor_range' value='4.5'/>
+  </include>
+
+  <!-- LAUNCH MOVEIT FOR PLANNING TRAJECTORIES -->
+  <include file="$(find hector_moveit_config)/launch/move_group.launch">
+    <arg name="drone_name" value='$(arg drone_name)'/>
+    <arg name="allow_trajectory_execution" value="true"/>
+    <arg name="fake_execution" value="true"/>
+    <arg name="info" value="false"/>
+    <arg name="debug" value="$(arg debug)"/>
+
+    <!--<arg name="octomap_frame" value="$(arg drone_name)/world"/>-->
+  </include>
+
+  <!--<include file="$(find hector_quadrotor_teleop)/launch/xbox_controller.launch" >
+    <arg name="control_mode" value="position"/>
+  </include> -->
+
+
+<!-- ######################### MY PACKAGES ########################################## -->
+
+  <!-- LAUNCH TRAJECTORY EXECUTOR -->
+  <include file="$(find trajectory_action_pkg)/launch/trajectory_server.launch">
+    <arg name="robot_name" value="$(arg drone_name)"/>
+  </include>
+
+</launch>

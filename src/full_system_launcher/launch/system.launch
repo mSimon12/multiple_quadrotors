@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<launch>
+
+   <!--Launch the world with the robots on Gazebo  -->	
+   <include file="$(find usar_gazebo)/launch/landslide.launch"/>		 <!--landslide, base_scene, post-disaster,home -->
+   <!--<include file="$(find hector_gazebo_worlds)/launch/rolling_landscape_120m.launch"/>-->
+
+<!-- LAUNCH ROBOTS -->
+
+  <!-- Spawn simulated quadrotor uav 1 -->
+  <group ns="UAV_1">
+    <include file="$(find uav)/launch/UAV.launch">
+      <arg name="drone_name" value="UAV_1"/>
+      <arg name="x" value="2.0"/>
+      <arg name="y" value="2.0"/>
+      <arg name="z" value="0.7"/> 
+    </include>
+  </group>
+
+  <!-- Spawn simulated quadrotor uav 2 --> 
+  <group ns="UAV_2">
+    <include file="$(find uav)/launch/UAV.launch">
+      <arg name="drone_name" default="UAV_2"/>
+      <arg name="x" value="2.0"/>
+      <arg name="y" value="4.0"/>
+      <arg name="z" value="0.7"/> 
+    </include>
+  </group>
+
+<!-- LAUNCH RVIZ -->	
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find full_system_launcher)/rviz/slam.rviz"/> 
+
+  <master auto="start"/>
+  <param name="/use_sim_time" value="true"/> 
+
+<!-- LAUNCH RQT
+  <node name="rqt_topic" pkg="rqt_topic" type="rqt_topic" output="screen" /> 
+  <node name="rqt_graph" pkg="rqt_graph" type="rqt_graph" output="screen" /> 
+  <node name="rqt_console" pkg="rqt_console" type="rqt_console" output="screen" /> 
+  <node name="rqt_tf_tree" pkg="rqt_tf_tree" type="rqt_tf_tree" output="screen" /> -->
+
+
+</launch>	
+

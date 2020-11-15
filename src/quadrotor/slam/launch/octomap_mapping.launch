@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name='map_frame' default='map'/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name='point_cloud' default='camera/depth/points'/>
+  <arg name='sensor_range' default ='5.0'/>
+
+  <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+	<!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
+	<param name="frame_id" type="string" value="$(arg map_frame)" />
+	
+	<!-- resolution in meter for the map when starting with an empty map -->
+	<param name="resolution" value="0.05" />
+		
+	<!-- the robot's base frame in which ground plane detection is performed (if enabled) -->
+	<param name="base_frame_id" value="$(arg base_frame)"/>
+
+	<!-- whether visualization should encode height with different colors -->
+	<param name="height_map" value="true"/>
+
+	<!-- color for visualizing occupied cells when ~heigh_map=False -->
+	<param name="color_r" value="1.0"/>
+	<param name="color_g" value="0.0"/>
+	<param name="color_b" value="0.0"/>
+	<param name="color_a" value="1.0"/>
+
+	<!-- maximum range to integrate (speedup!) -->
+	<param name="sensor_model/max_range" value="$(arg sensor_range)" />
+
+	<!-- probabilities for hits in the sensor model when dynamically building a map -->
+	<param name="sensor_model/hit" value="0.7" />
+	
+	<!-- probabilities for misses in the sensor model when dynamically building a map -->
+	<param name="sensor_model/miss" value="0.4" />
+
+	<!-- minimum probability for clamping when dynamically building a map -->
+	<param name="sensor_model/min" value="0.12" />
+
+	<!-- maximum probability for clamping when dynamically building a map -->
+	<param name="sensor_model/max" value="0.97" />
+
+	<!-- whether topics are published latched or only once per change. 
+	     For maximum performance when building a map (with frequent updates), 
+ 	     set to false. When set to true, on every map change all topics and 
+	     visualizations will be created. -->
+	<param name="latch" value="false" />
+		
+	<!-- whether the ground plane should be detected and ignored from scan data when dynamically building a map -->
+	<param name="filter_ground" value="true" />
+
+	<!-- distance threshold for points (in z direction) to be segmented to the ground plane -->
+	<param name="ground_filter/distance" value="0.04" />
+
+	<!-- angular threshold of the detected plane from the horizontal plane to be detected as ground -->
+	<param name="ground_filter/angle" value="1.0" />
+
+	<!-- distance threshold from z=0 for a plane to be detected as ground -->
+	<param name="ground_filter/plane_distance" value="0.07" />
+
+	<!-- minimum height of points to consider for insertion in the callback 
+	<param name="pointcloud_min_z " value="-5.0" />-->
+
+	<!-- maximum height of points to consider for insertion in the callback 
+	<param name="pointcloud_max_z " value="40.0" />-->
+
+	<!-- minimum height of occupied cells to be consider in the final map 
+	<param name="occupancy_min_z " value="0.0" />-->
+
+	<!-- maximum height of occupied cells to be consider in the final map 
+	<param name="occupancy_max_z " value="40.0" />-->
+	
+	<!-- data source to integrate (PointCloud2) -->
+	<remap from="cloud_in" to="$(arg point_cloud)"/>	
+  </node>
+</launch>

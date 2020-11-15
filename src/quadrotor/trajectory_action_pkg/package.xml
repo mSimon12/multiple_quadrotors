@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>trajectory_action_pkg</name>
+  <version>0.0.0</version>
+  <description>The action_pkg package</description>
+
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="marcelo@todo.todo">marcelo</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+  <url type="website">https://github.com/mSimon12/multiple_quadrotors</url>
+  <author email="marcelo_simon@hotmail.com">Marcelo Simon</author> 
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>genmsg</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <exec_depend>actionlib</exec_depend>
+
+  <depend>actionlib_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>message_generation</depend>
+  <depend>std_msgs</depend>
+  <depend>rospy</depend>
+  <depend>hector_moveit_config</depend>
+  <depend>hector_quadrotor_actions</depend>
+  <depend>slam</depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

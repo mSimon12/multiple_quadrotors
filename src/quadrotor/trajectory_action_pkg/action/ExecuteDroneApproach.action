@@ -1,0 +1,7 @@
+# Goal definition
+geometry_msgs/Pose goal
+---
+
+---
+#Feedback definition
+geometry_msgs/Pose current_pose

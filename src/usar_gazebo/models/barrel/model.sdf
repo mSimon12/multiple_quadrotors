@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+   <model name="barrel">
+      <static>true</static>
+      <link name="barrel_link">
+	<inertial>
+          <mass>50</mass>
+          <inertia>
+            <ixx>0.166667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.166667</iyy>
+            <iyz>0</iyz>
+            <izz>0.166667</izz>
+          </inertia>
+          <pose frame=''>0 0 1 0 0 0</pose>
+     	</inertial>
+	<gravity>1</gravity>
+	
+	<pose>0 0 0.1 0 0 0</pose>
+	<collision name="collision">
+	  <geometry>
+	     <mesh>
+		<uri>model://barrel/meshes/barrel.dae</uri>
+		<scale>0.25 0.25 0.25</scale>
+	     </mesh>
+	  </geometry>
+	</collision>
+	<visual name="visual">
+	  <geometry>
+	     <mesh>
+		<uri>model://barrel/meshes/barrel.dae</uri>
+		<scale>0.25 0.25 0.25</scale>
+  	     </mesh>
+	  </geometry>
+	</visual>
+      </link>
+   </model>
+</sdf>

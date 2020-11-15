@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+   <arg name="robot_name" default="robot"/>
+   <param name="robot_name" type="str" value="$(arg robot_name)"/>
+
+   <node name="trajectory_server" pkg="trajectory_action_pkg" type="approach.py" output="screen"/>
+</launch>	
