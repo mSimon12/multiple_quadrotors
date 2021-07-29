@@ -13,11 +13,11 @@
             <iyz>0</iyz>
             <izz>0.166667</izz>
           </inertia>
-          <pose frame=''>0 0 1 0 -0 0</pose>
+          <pose frame=''>0 0 0.85 0 -0 0</pose>
      	</inertial>
 	<gravity>1</gravity>
 	
-	<pose>0 0 0.1 0 0 0</pose>
+	<pose>0 0 -0.85 0 0 0</pose>
 	<collision name="collision">
 	  <geometry>
 	     <mesh>

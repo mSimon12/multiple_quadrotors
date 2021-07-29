@@ -22,7 +22,6 @@ find_package(catkin REQUIRED COMPONENTS
   hector_uav_msgs
   actionlib
   genmsg 
-  system_msgs
 )
 
 find_package(octomap REQUIRED)

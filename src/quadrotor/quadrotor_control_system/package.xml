@@ -35,7 +35,6 @@
   <depend>actionlib_msgs</depend>
   <depend>moveit_msgs</depend>
   <depend>hector_uav_msgs</depend>
-  <depend>system_msgs</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

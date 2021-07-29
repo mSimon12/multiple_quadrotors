@@ -17,7 +17,7 @@
      	</inertial>
 	<gravity>1</gravity>
 
-	<pose>0 0 0.1 0 0 0</pose>
+	<pose>0 0 -0.6 0 0 0</pose>
 	<collision name="collision">
 	  <geometry>
 	     <mesh>
